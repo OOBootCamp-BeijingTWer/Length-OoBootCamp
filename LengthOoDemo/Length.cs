@@ -1,19 +1,22 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace LengthOoDemo
 {
-    class Length
+    public enum Unit
     {
-        private string unit;
-        private long value;
+        km=3,
+        m=0,
+        dm=-1,
+        cm=-2,
+        mm=-3,
+    }
+    public class Length
+    {
+        private double value;
 
-        public Length(long value, string unit)
+        public Length(double value, Unit unit)
         {
-            this.value = value;
-            this.unit = unit;
+            this.value = value*Math.Pow(10, (int)unit);
         }
 
         public override bool Equals(object obj)
@@ -21,8 +24,8 @@ namespace LengthOoDemo
             if (obj == null || GetType() != obj.GetType())
                 return false;
 
-            Length length = (Length) obj;
-            return length.value == value && unit == length.unit;
+            var length = (Length) obj;
+            return Math.Abs(length.value - value) < 0.0001;
         }
     }
 }
